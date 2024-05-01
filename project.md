@@ -1,3 +1,5 @@
+TESTESTESTESTEST
+
 notes for project structure
 1. Portfolio optimizer based on a basket of indices/stocks/etc
     - user gets a risk tolerance, optimizer generates weights on each index, outputs an optimal portfolio
