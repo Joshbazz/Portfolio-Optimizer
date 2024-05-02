@@ -1,8 +1,6 @@
-Mario wrote this line
-
-TESTESTESTESTEST
 
 testing for the 3rd time - ME
+
 
 notes for project structure
 1. Portfolio optimizer based on a basket of indices/stocks/etc
