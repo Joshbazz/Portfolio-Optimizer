@@ -1,3 +1,6 @@
+----------HOW WE'RE PUSHING AND PULLING-----------
+---> we realized that the best way to go about dealing with handling merge conflicts is by partitioning out our assigned sections 
+
 
 testing for the 3rd time - ME
 

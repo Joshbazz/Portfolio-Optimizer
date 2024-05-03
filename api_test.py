@@ -35,8 +35,26 @@ new_df.dropna(inplace=True)
 # Print the list of ticker close column names
 print("Ticker Close Column Names:", ticker_closes)
 
-# Print the new dataframe to verify
+
+## Feel free to adjust or send feedback if the code could be better or be more precise to what is needed:
+
+# Calculate the annualized mean return for each asset
+annualized_mean_return = new_df.mean() * 252
+
+# Calculate the annualized standard deviation (risk) for each asset
+annualized_std_dev = new_df.std() * (252 ** 0.5)
+
+# Display annualized risk and return for each asset
+for ticker in tickers:
+    print(f'{ticker}:')
+    print(f'Annualized Mean Return: {annualized_mean_return[f"{ticker}_Daily_Return"]:.2%}')
+    print(f'Annualized Risk (Standard Deviation): {annualized_std_dev[f"{ticker}_Daily_Return"]:.2%}')
+    print()
+
 print(new_df)
 
-asset_summary = new_df.describe()
-print(asset_summary)
+# # Print the new dataframe to verify
+# print(new_df)
+
+# asset_summary = new_df.describe()
+# print(asset_summary)
