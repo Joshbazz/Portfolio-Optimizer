@@ -1,6 +1,7 @@
 import yfinance as yf
 import datetime
 import pandas as pd
+import numpy as np
 
 # Define the list of stock ticker symbols
 tickers = ['AGG', 'BNDX', 'SPY', 'IVW', 'IVE', 'BTC-USD', 'ETH-USD']
@@ -36,13 +37,19 @@ new_df.dropna(inplace=True)
 print("Ticker Close Column Names:", ticker_closes)
 
 
-## Feel free to adjust or send feedback if the code could be better or be more precise to what is needed:
+span = len(new_df)  # Adjust the span for three years of historical data
 
-# Calculate the annualized mean return for each asset
-annualized_mean_return = new_df.mean() * 252
+# Calculate the annualized exponentially weighted mean return for each asset
+annualized_mean_return = new_df.ewm(span=span).mean().iloc[-1] * 252
 
-# Calculate the annualized standard deviation (risk) for each asset
-annualized_std_dev = new_df.std() * (252 ** 0.5)
+# Calculate the annualized exponentially weighted standard deviation (risk) for each asset
+annualized_std_dev = new_df.ewm(span=span).std().iloc[-1] * np.sqrt(252)
+
+# # Calculate the annualized mean return for each asset
+# annualized_mean_return = new_df.mean() * 252
+
+# # Calculate the annualized standard deviation (risk) for each asset
+# annualized_std_dev = new_df.std() * (252 ** 0.5)
 
 # Display annualized risk and return for each asset
 for ticker in tickers:
@@ -50,8 +57,6 @@ for ticker in tickers:
     print(f'Annualized Mean Return: {annualized_mean_return[f"{ticker}_Daily_Return"]:.2%}')
     print(f'Annualized Risk (Standard Deviation): {annualized_std_dev[f"{ticker}_Daily_Return"]:.2%}')
     print()
-
-print(new_df)
 
 # # Print the new dataframe to verify
 # print(new_df)
