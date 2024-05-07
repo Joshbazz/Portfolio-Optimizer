@@ -124,3 +124,8 @@ def optimize_portfolio(agg_mean_return, target_return=0.05):
 # Example usage:
 agg_mean_return = individual_assets()['Annualized_Mean_Return']
 optimal_weights = optimize_portfolio(agg_mean_return)
+
+
+# add the target return portfolios to the dataframe
+five_perc_return = pd.DataFrame(rounded_solution)
+five_perc_return
