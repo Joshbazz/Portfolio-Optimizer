@@ -5,6 +5,7 @@ import os
 import alpaca_trade_api as tradeapi
 import datetime as dt
 import pytz
+import hvplot.pandas
 
 class MCSimulation:
     """
@@ -148,13 +149,17 @@ class MCSimulation:
         if not isinstance(self.simulated_return,pd.DataFrame):
             self.calc_cumulative_return()
         
+
+        simulated_returns_series = self.simulated_return.iloc[-1, :]
+
         # Use the `plot` function to create a probability distribution histogram of simulated ending prices
         # with markings for a 95% confidence interval
         plot_title = f"Distribution of Final Cumuluative Returns Across All {self.nSim} Simulations"
-        plt = self.simulated_return.iloc[-1, :].plot(kind='hist', bins=10,density=True,title=plot_title)
-        plt.axvline(self.confidence_interval.iloc[0], color='r')
-        plt.axvline(self.confidence_interval.iloc[1], color='r')
-        return plt
+        plot = simulated_returns_series.hvplot.hist(bins=10, title=plot_title, density=True)
+        # plot = self.simulated_return.iloc[-1, :].plot(kind='hist', bins=10,density=True,title=plot_title)
+        plot *= hvplot.hline(self.confidence_interval.iloc[0], color='r')
+        plot *= hvplot.hline(self.confidence_interval.iloc[1], color='r')
+        return plot
     
     def summarize_cumulative_return(self):
         """
