@@ -142,24 +142,37 @@ class MCSimulation:
     def plot_distribution(self):
         """
         Visualizes the distribution of cumulative returns simulated using calc_cumulative_return method.
-
         """
-        
-        # Check to make sure that simulation has run previously. 
-        if not isinstance(self.simulated_return,pd.DataFrame):
+        # Check to make sure that simulation has run previously.
+        if not isinstance(self.simulated_return, pd.DataFrame):
             self.calc_cumulative_return()
-        
 
         simulated_returns_series = self.simulated_return.iloc[-1, :]
 
-        # Use the `plot` function to create a probability distribution histogram of simulated ending prices
+        # Use the `hvplot.hist` function to create a probability distribution histogram of simulated ending prices
         # with markings for a 95% confidence interval
-        plot_title = f"Distribution of Final Cumuluative Returns Across All {self.nSim} Simulations"
+        plot_title = f"Distribution of Final Cumulative Returns Across All {self.nSim} Simulations"
         plot = simulated_returns_series.hvplot.hist(bins=10, title=plot_title, density=True)
-        # plot = self.simulated_return.iloc[-1, :].plot(kind='hist', bins=10,density=True,title=plot_title)
-        plot *= hvplot.hline(self.confidence_interval.iloc[0], color='r')
-        plot *= hvplot.hline(self.confidence_interval.iloc[1], color='r')
+
+        # Calculate y-values for horizontal lines
+        ci_lower = self.confidence_interval.iloc[0]
+        ci_upper = self.confidence_interval.iloc[1]
+
+        # Add horizontal lines for the confidence interval
+        line_plot_lower = pd.DataFrame({
+            'x': [simulated_returns_series.min(), simulated_returns_series.max()],
+            'y': [ci_lower, ci_lower]
+        }).hvplot.line(x='x', y='y', color='r')
+        plot *= line_plot_lower
+
+        line_plot_upper = pd.DataFrame({
+            'x': [simulated_returns_series.min(), simulated_returns_series.max()],
+            'y': [ci_upper, ci_upper]
+        }).hvplot.line(x='x', y='y', color='r')
+        plot *= line_plot_upper
+
         return plot
+
     
     def summarize_cumulative_return(self):
         """
