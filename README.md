@@ -6,7 +6,7 @@ If you prefer running the code without downloading the repository or if you're a
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Joshbazz/Portfolio-Optimizer/blob/main/colab.ipynb)
 
-Simply navigate to the top bar, and under Runtime, click on "Run All" (see below):
+Simply navigate to the top bar, and under Runtime, click on "Run All" (see below): 
 
 ![Run All in Colab](references/image.png)
 
